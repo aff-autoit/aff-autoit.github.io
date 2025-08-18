@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "dev": "reveal-md slides --watch",
+    "build": "reveal-md slides --static dist",
+    "postbuild": "node post-build.mjs"
+  },
+  "devDependencies": {
+    "glob": "^11.0.3",
+    "reveal-md": "^6.1.4"
+  },
+  "license": "MIT"
+}

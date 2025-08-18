@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{pageTitle}}</title>
+    <link rel="stylesheet" href="{{themeUrl}}" id="theme" />
+    <style>
+      .reveal a {
+        color: inherit;
+      }
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: auto;
+        padding: 0;
+        max-width: 1300px;
+      }
+      
+      li {
+        list-style: none;
+        height: 200px;
+        width: 300px;
+        padding: 3px;
+        box-sizing: border-box;
+        text-align: center;
+        position: relative;
+        border: 1px solid #1E1E1E;
+      }
+
+      li:hover {
+        border-color: #53A0B5;
+      }
+
+      li a {
+        display: flex;
+        height: 100%;
+        justify-content: space-between;
+        flex-direction: column;
+      }
+
+      li header, li footer {
+        font-size: 10pt;
+        font-family: monospace;
+      }
+
+      input#draft:not(:checked) ~ ul .draft {
+        display: none;
+      }
+
+      .draft:before {
+        content: 'DRAFT';
+        background-image: none;
+        color: red;
+        font-weight: bold;
+        position: absolute;
+        top: 0; bottom: 0;
+        left: 0; right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotate3d(0, 0, 1, -30deg);
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <label>Show drafts</label>
+    <input type="checkbox" id="draft" />
+
+    <ul>
+      {{#files}}
+        <li class="reveal reveal-viewport {{status}}">
+          <a href="{{filePath}}" title="{{title}}">
+            <header>
+              {{filePath}}
+            </header>
+            <main>
+              <h5>
+                {{title}}
+              </h5>
+              <h6>
+                {{subTitle}}
+              </h6>
+            </main>
+            <footer>
+              {{#by}}
+                by {{.}}
+              {{/by}}
+            </footer>
+          </a>
+        </li>
+      {{/files}}
+    </ul>
+
+    <p>
+      Last update: {{date}}
+    </p>
+  </body>
+</html>

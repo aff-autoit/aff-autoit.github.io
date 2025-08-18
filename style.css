@@ -1,0 +1,4 @@
+.reveal .r-stack>.fragment {
+  transition-duration: 2s;
+}
+
