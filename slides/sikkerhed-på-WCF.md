@@ -1,3 +1,9 @@
+---
+title: Sikkerhed på WCF
+subTitle: og AutoDesktop.Gateway 
+by: Andreas Fuller 
+---
+
 # Status
 ## Sikkerhed på WCF
 ### og AutoDesktop.Gateway

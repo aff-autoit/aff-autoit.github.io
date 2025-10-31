@@ -271,7 +271,7 @@ section.has-light-background h6 {
   width: 90%;
   margin: var(--r-block-margin) auto;
   text-align: left;
-  font-size: 0.9em;
+  font-size: 0.8em;
   font-family: var(--r-code-font);
   line-height: 1.2em;
   word-wrap: break-word;
