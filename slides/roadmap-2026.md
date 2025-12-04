@@ -1,7 +1,6 @@
 ---
 title: Roadmap
 subTitle: AutoDesktop arkitektur
-status: draft
 ---
 
 # Roadmap
