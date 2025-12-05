@@ -17,18 +17,16 @@ status: draft
 
 ## Nøglebegreber
 
-- Platformsarkitektur
+- Platformsarkitektur <!-- .element: class="fragment" -->
   - API'er <!-- .element: class="fragment" -->
   - Gateways og BFF'er <!-- .element: class="fragment" -->
   - Klienter <!-- .element: class="fragment" -->
   - REST <!-- .element: class="fragment" -->
-
-- Løsningsarkitektur
+- Løsningsarkitektur <!-- .element: class="fragment" -->
   - CQRS <!-- .element: class="fragment" -->
   - Domain Driven Design <!-- .element: class="fragment" -->
   - Clean Architecture <!-- .element: class="fragment" -->
-
-- Kodeteknik
+- Kodeteknik <!-- .element: class="fragment" -->
   - Result\<T\> <!-- .element: class="fragment" -->
   - Og sikker mere! <!-- .element: class="fragment" -->
 
