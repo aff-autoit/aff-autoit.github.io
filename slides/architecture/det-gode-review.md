@@ -16,31 +16,22 @@ subTitle: Arkitektur i AutoDesktop
 ## Det gode review
 
 - En konstruktiv dialog - gå efter bolden <!-- .element: class="fragment" -->
+  - MoSCoW <!-- .element: class="fragment" -->
 - Overholdes vores aftaler? <!-- .element: class="fragment" -->
 - Må godt tage tid <!-- .element: class="fragment" -->
-- MoSCoW <!-- .element: class="fragment" -->
 - Videresend reviews hvis nødvendigt <!-- .element: class="fragment" -->
   - Tidspres <!-- .element: class="fragment" -->
   - Tvivl <!-- .element: class="fragment" -->
   - Tie breaker <!-- .element: class="fragment" -->
+- Flere reviewers, fleres approvals <!-- .element: class="fragment" -->
 - Sæt jer gerne sammen <!-- .element: class="fragment" -->
+
+Note: hvad sendes til review? Hvornår oftes skal man review? Hvor mange skal godkende?
 
 ---
 
 ## Hvad er vores aftaler?
 
 - Platformsarkitektur <!-- .element: class="fragment" -->
-  - API'er <!-- .element: class="fragment" -->
-  - Gateways og BFF'er <!-- .element: class="fragment" -->
-  - Klienter <!-- .element: class="fragment" -->
-  - REST <!-- .element: class="fragment" -->
 - Løsningsarkitektur <!-- .element: class="fragment" -->
-  - CQRS <!-- .element: class="fragment" -->
-  - Domain Driven Design <!-- .element: class="fragment" -->
-  - Clean Architecture <!-- .element: class="fragment" -->
 - Kodeteknik <!-- .element: class="fragment" -->
-  - Result\<T\> <!-- .element: class="fragment" -->
-  - async/await <!-- .element: class="fragment" -->
-  - IoC <!-- .element: class="fragment" -->
-  - Testing <!-- .element: class="fragment" -->
-  - Og sikkert mere! <!-- .element: class="fragment" -->

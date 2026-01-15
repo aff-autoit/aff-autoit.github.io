@@ -13,6 +13,7 @@ subTitle: i AutoDesktop
 - API'er <!-- .element: class="fragment" -->
 - Gateways og BFF'er <!-- .element: class="fragment" -->
 - Klienter <!-- .element: class="fragment" -->
+- Sikkerhed <!-- .element: class="fragment" -->
 - REST <!-- .element: class="fragment" -->
 - OpenAPI <!-- .element: class="fragment" -->
 
@@ -153,6 +154,7 @@ flowchart TD
   hub-->leasing
   hub-->crm
   hub-->cus
+  hub-->hub
 
   offer-->leasing
   offer-->adm
@@ -202,6 +204,7 @@ flowchart TD
 - Distribueret BFF'er\* <!-- .element: class="fragment" -->
 - Legacy app kalder både bff og gateway <!-- .element: class="fragment" -->
 - Hubben bør drives af events <!-- .element: class="fragment" -->
+- ADM er blevet et skraldespand, og har deprecated endpoints <!-- .element: class="fragment" -->
 
 ```mermaid
 flowchart TD
@@ -333,6 +336,7 @@ flowchart TD
 - Holder ikke forretningslogik <!-- .element: class="fragment" -->
 - Håndterer sikkerhed (AS-IS) <!-- .element: class="fragment" -->
   - Især Authentication <!-- .element: class="fragment" -->
+- Udstiller ikke objekter fra API'erne <!-- .element: class="fragment" -->
 
 ---
 
@@ -346,9 +350,10 @@ flowchart TD
   - Nuxt er indgangen <!-- .element: class="fragment" -->
   - BARF er authentication <!-- .element: class="fragment" -->
   - BFF er data aggregering <!-- .element: class="fragment" -->
-  - Kunne godt samles i Nuxt på sigt <!-- .element: class="fragment" -->
+  - Kunne godt samles på sigt <!-- .element: class="fragment" -->
 
-
+notes:
+Aggregerer data og holder ikke forretningslogik
 ---
 ## Klienter
 
@@ -368,6 +373,32 @@ f.eks. enums, undefined og unions
 
 ---
 
+## Sikkerhed
+
+- Identity Serveren leverer Authentication <!-- .element: class="fragment" -->
+  - En access token alle kan validere <!-- .element: class="fragment" -->
+  - Gyldig en time som standard <!-- .element: class="fragment" -->
+- Snak med Policy Provideren for Authorization <!-- .element: class="fragment" -->
+  - Vi kommer til at overtage Policy Provideren <!-- .element: class="fragment" -->
+- Permissions vedligeholdes med Identity Admin <!-- .element: class="fragment" -->
+  - Menneskelig faktor <!-- .element: class="fragment" -->
+  - Løsning: Billing Helper? <!-- .element: class="fragment" -->
+- Privacy By Design <!-- .element: class="fragment" -->
+  - GET /vehicles giver kun de køretøjer du har adgang til <!-- .element: class="fragment" -->
+  - Virker stadig ikke for externe systemer <!-- .element: class="fragment" -->
+
+----
+
+## X-user-context
+### Sikerhed
+
+- En udviklervenlig måde at kalde api'erne på <!-- .element: class="fragment" -->
+- Usikkert <!-- .element: class="fragment" -->
+- Vi er ved at overgå til access tokens <!-- .element: class="fragment" -->
+
+
+---
+
 ## REST
 > REST defines 6 architectural constraints that make any web service – a truly RESTful API.  
 > -- [restfulapi.net](https://restfulapi.net/)
@@ -383,7 +414,7 @@ f.eks. enums, undefined og unions
 REST som begreb er udvandet <!-- .element: class="fragment" -->
 
 Note:
-1. En api'er, HTTP og conventions
+1. Ens api'er, HTTP og conventions
 2. Afhængigheder
 3. Ingen session state
 4. Doh
@@ -398,7 +429,7 @@ Note:
 By [Leonard Richardson](https://en.wikipedia.org/wiki/Richardson_Maturity_Model)
 
 ### Level 0
-The Swamp of POX - et endpoint ❌ <!-- .element: class="fragment" -->
+The Swamp of POX - ét endpoint <!-- .element: class="fragment" -->
 
 ### Level 1
 Resources - flere endpoints ✅ <!-- .element: class="fragment" -->
@@ -436,6 +467,7 @@ Hypermedia Controls - links ❌ <!-- .element: class="fragment" -->
     <li>GET /vehicles/:id</li>
     <li>GET /vehicles</li>
     <li>PUT /vehicles/:id { data }</li>
+    <li>PATCH /vehicles/:id { data }</li>
     <li>DELETE /vehicles/:id</li>
     <li>POST /vehicles/:id/mark-as-sold { data }</li>
   </ul>
@@ -459,9 +491,10 @@ Hypermedia Controls - links ❌ <!-- .element: class="fragment" -->
 - 403 Forbidden - Du må ikke! <!-- .element: class="fragment" -->
 - 404 Not Found - Noget er ikke fundet, se næste slide <!-- .element: class="fragment" -->
 - 409 Conflict - En domæneregel er ikke overholdt <!-- .element: class="fragment" -->
-- 422 Unprocessable Content - Det du siger giver ikke mening! <!-- .element: class="fragment" -->
+- 422 Unprocessable Content/Entity - Det du siger giver ikke mening! <!-- .element: class="fragment" -->
 - 429 Too Many Requests - Slap af! <!-- .element: class="fragment" -->
 - 500 Internal Server Error - Oops! <!-- .element: class="fragment" -->
+- 503 Service Unavailable - noget er ikke oppe <!-- .element: class="fragment" -->
 
 ----
 ## 404 Not Found
@@ -475,7 +508,7 @@ POST /users/1337/friends
 - Hvis 1337 ikke findes?  
 __404 Not Found__ <!-- .element: class="fragment" -->
 - Hvis 1442 ikke findes?  
-__422 Unprocessable Content__ <!-- .element: class="fragment" -->
+__????__ <!-- .element: class="fragment" -->
 
 > Indtil videre er vi pragmatiske og bruger __404__ hvis noget ikke kan findes
 <!-- .element: class="fragment" -->
@@ -486,11 +519,12 @@ __422 Unprocessable Content__ <!-- .element: class="fragment" -->
 > En specifikation for et HTTP API
 
 - Ofte synomym med Swagger <!-- .element: class="fragment" -->
-  - SwaggerGen generere spec <!-- .element: class="fragment" -->
+  - SwaggerGen genererer spec <!-- .element: class="fragment" -->
   - SwaggerUI rendere <!-- .element: class="fragment" -->
   - NSwag generere kode <!-- .element: class="fragment" -->
-- Vi tester at spec'en ikke ændrer sig <!-- .element: class="fragment" -->
+- En test fejler når spec'en ændrer sig <!-- .element: class="fragment" -->
 - API'erne genererer en nuget pakke med NSwag <!-- .element: class="fragment" -->
+  - Har sine udfordringer <!-- .element: class="fragment" -->
 
 ----
 
@@ -512,3 +546,9 @@ __422 Unprocessable Content__ <!-- .element: class="fragment" -->
 - Afhængigheder? <!-- .element: class="fragment" -->
 - Endpoints? <!-- .element: class="fragment" -->
 - Er der breaking changes? <!-- .element: class="fragment" -->
+
+---
+
+# Spørgmål?
+# 🙍🙋🙍🙎🙍 
+
