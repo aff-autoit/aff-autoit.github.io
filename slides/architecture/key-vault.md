@@ -23,7 +23,7 @@ title: Key Vault
 ---
 
 ## Azure Key Vault
-![alt text](keyvault.png)
+![alt text](assets/keyvault.png)
 
 - -- tolker configration manageren som nesting. Kan konfigureres
 - En vault pr applikation pr miljø
@@ -80,13 +80,13 @@ Ja okay - ikke helt nemt...
 ## App Registration
 <div class='r-stack'>
 
-![alt text](app-registration.png)
+![alt text](assets/app-registration.png)
 <!-- .element: class="fragment current-visible" -->
 
-![alt text](app-secret.png)
+![alt text](assets/app-secret.png)
 <!-- .element: class="fragment current-visible" -->
 
-![alt text](app-iam.png)
+![alt text](assets/app-iam.png)
 <!-- .element: class="fragment current-visible" -->
 </div>
 ----
