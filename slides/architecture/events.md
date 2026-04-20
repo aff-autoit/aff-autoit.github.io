@@ -18,31 +18,56 @@ title: Events
 ## Udgangspunkt
 
 ```mermaid
-flowchart LR
-start@{ shape: start } --Nyt lead--> CRM
-CRM --Gem--> DB[(Database)]
-CRM --SendToExternal--> HUB
-HUB --> app[App backend]
-HUB --> cd[Call Drip]
+sequenceDiagram
+    actor entry as Actor
+    participant CRM
+    participant DB
+    participant Hub
+    participant App as App Backend
+    participant CD as Call Drip
+
+    entry->>+CRM: Nyt Lead
+    CRM->>DB: Gem
+    CRM->>+Hub: SendToExternal
+    Hub->>App: Notify
+    Hub->>CD: Notify
+    Hub-->>-CRM: OK
+    CRM-->>-entry: OK
 ```
+<!-- .element: class="fragment" -->
 
 - Når Hub'en er nede, bliver leadet aldrig sendt til app og Call Drip <!-- .element: class="fragment" -->
 - Når app backenden er nede, sendes (måske) ikke til Call Drip <!-- .element: class="fragment" -->
-
 ---
 
 ### Intro Event Bus
 
 ```mermaid
-flowchart LR
-start@{ shape: start } --Nyt lead--> CRM
-CRM --Gem--> DB[(Database)]
-CRM --publish(LeadCreated)--> bus[Event bus]
+sequenceDiagram
+    actor entry as Actor
+    participant CRM
+    participant DB
+    participant Bus as Event Bus
+    participant Hub
+    participant App as App Backend
+    participant CD as Call Drip
 
-Hub.App -.subscribe.-> bus
-Hub.CallDrip -.subscribe.-> bus
-
+    entry->>+CRM: Nyt Lead
+    CRM->>DB: Gem
+    CRM->>Bus: Publish(new LeadCreated())
+    CRM-->>-entry: OK
+    
+    par App subscription
+        Bus->>+Hub: Notify(event)
+        Hub->>App: Notify
+        Hub-->>-Bus: ack
+    and Call Drip subscription
+        Bus->>+Hub: Notify(event)
+        Hub->>CD: Notify
+        Hub-->>-Bus: ack
+    end
 ```
+<!-- .element: class="fragment" -->
 
 - Hvad hvis publish fejler? <!-- .element: class="fragment" -->
 - Hvad hvis subscriber fejler? <!-- .element: class="fragment" -->
@@ -53,19 +78,31 @@ Hub.CallDrip -.subscribe.-> bus
 #### Intro Event Bus
 ### Hvis publish fejler
 
-```mermaid
-flowchart LR
-start@{ shape: start } --Nyt lead--> CRM
-CRM --Gem lead--> DB[(Database)]
-CRM --"Gem LeadCreated i outbox"--> DB
-CRM --Commit--> DB
-DB --publish(LeadCreated)--> bus[Event bus]
-```
-
 > Outbox Pattern  
 > [...] the service that sends the message to first store the message in the database as part of the transaction [...].  
 > -- [microservices.io](https://microservices.io/patterns/data/transactional-outbox.html)
 <!-- .element: class="fragment" -->
+
+```mermaid
+sequenceDiagram
+    actor entry as Actor
+    participant CRM
+    participant DB
+    participant Outbox as Background job
+    participant Bus as Event Bus
+
+    entry->>+CRM: Nyt Lead
+    CRM->>DB: Gem lead + LeadCreated i outbox
+    CRM-->>-entry: OK
+
+    Outbox->>DB: Poll
+    activate Outbox
+    Outbox->>Bus: Publish(new LeadCreated())
+    deactivate Outbox
+    
+```
+<!-- .element: class="fragment" -->
+
 
 ----
 
